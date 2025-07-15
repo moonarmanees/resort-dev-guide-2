@@ -1,11 +1,10 @@
 // .devcontainer/devcontainer.json
 {
   "name": "React + Vite Codespace",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
-  "workspaceFolder": "/workspace/client",
-  "forwardPorts": [5173],
+  "workspaceFolder": "resort-dev-guide-2/client",
   "postCreateCommand": "npm install",
-
+  "forwardPorts": [5173],
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -15,7 +14,8 @@
         "msjsdiag.debugger-for-chrome"
       ],
       "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "terminal.integrated.cwd": "/workspaces/resort-dev-guide-2/client"
       }
     }
   }
