@@ -27,12 +27,12 @@ jobs:
 
       - name: Create 404 fallback
         run: |
-          cp client/dist/index.html client/dist/404.html
+          cp docs/index.html docs/404.html
 
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v1
         with:
-          path: client/dist
+          path: docs
 
   deploy:
     needs: build-and-publish
