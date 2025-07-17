@@ -1,8 +1,9 @@
-
-import { useStore } from '../store/useStore'
+import React from 'react';
+import { useCounter } from '../context/useCounter';
 
 export default function Counter() {
-  const { count, increment, reset } = useStore()
+  const { count, increment, reset } = useCounter();
+
   return (
     <div className="mt-4">
       <h2>Counter: {count}</h2>
@@ -13,5 +14,5 @@ export default function Counter() {
         Reset
       </button>
     </div>
-  )
+  );
 }
