@@ -1,9 +1,7 @@
-/* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
+import { CounterContext } from './createCounterContext';
 
-export const CounterContext = createContext();
-
-export function CounterProvider({ children }) {
+export default function CounterProvider({ children }) {
   const [count, setCount] = useState(0);
   const increment = () => setCount(c => c + 1);
   const reset     = () => setCount(0);
