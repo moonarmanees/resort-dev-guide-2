@@ -1,7 +1,7 @@
-import React from 'react'
-import { Outlet, Link } from 'react-router-dom'
-import Header from './Header'
-import Footer from './Footer'
+import React from "react";
+import { Outlet, Link } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
 
 export default function Layout() {
   return (
@@ -30,10 +30,14 @@ export default function Layout() {
           <div className="collapse navbar-collapse" id="mainNavbar">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">Home</Link>
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
+                <Link className="nav-link" to="/about">
+                  About
+                </Link>
               </li>
             </ul>
           </div>
@@ -44,5 +48,5 @@ export default function Layout() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

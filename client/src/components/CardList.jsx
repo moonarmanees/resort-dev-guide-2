@@ -1,5 +1,5 @@
-import React from 'react'
-import Card from './Card'
+import React from "react";
+import Card from "./Card";
 
 export default function CardList({ items }) {
   return (
@@ -10,5 +10,5 @@ export default function CardList({ items }) {
         </div>
       ))}
     </div>
-  )
+  );
 }
