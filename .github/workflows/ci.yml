@@ -1,0 +1,37 @@
+name: CI – Lint, Format, Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-format-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Run ESLint
+        working-directory: ./client
+        run: npm run lint
+
+      - name: Check code format with Prettier
+        working-directory: ./client
+        run: npm run format:check
+
+      - name: Run production build
+        working-directory: ./client
+        run: npm run build
+
+        
