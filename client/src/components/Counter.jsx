@@ -1,5 +1,5 @@
-import React from 'react';
-import { useCounter } from '../context/useCounter.js';  // 👉 include the “.js”
+import React from "react";
+import { useCounter } from "../context/useCounter.js"; // 👉 include the “.js”
 
 export default function Counter() {
   const { count, increment, reset } = useCounter();

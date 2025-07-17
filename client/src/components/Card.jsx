@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function Card({ title, text }) {
   return (
@@ -8,5 +8,5 @@ export default function Card({ title, text }) {
         <p className="card-text">{text}</p>
       </div>
     </div>
-  )
+  );
 }
