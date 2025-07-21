@@ -1,5 +1,6 @@
-import React from "react";
-import { useCounter } from "../context/useCounter.js"; // 👉 include the “.js”
+import React from 'react';
+import { useCounter } from '../context/useCounter';
+import Button from './Button';
 
 export default function Counter() {
   const { count, increment, reset } = useCounter();
@@ -7,12 +8,8 @@ export default function Counter() {
   return (
     <div className="mt-4">
       <h2>Counter: {count}</h2>
-      <button className="btn btn-primary me-2" onClick={increment}>
-        +1
-      </button>
-      <button className="btn btn-secondary" onClick={reset}>
-        Reset
-      </button>
+      <Button label="+1"      variant="primary"   onClick={increment} />
+      <Button label="Reset"   variant="secondary" onClick={reset} />
     </div>
   );
 }
