@@ -1,13 +1,13 @@
-import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import React from "react";
+import { Outlet, Link } from "react-router-dom";
 
-import Header from './Header';
-import Button from './Button';
-import Footer from './Footer';
+import Header from "./Header";
+import Button from "./Button";
+import Footer from "./Footer";
 
 export default function Layout() {
   // example click handler for demo
-  const onDemoClick = () => alert('Button clicked!');
+  const onDemoClick = () => alert("Button clicked!");
 
   return (
     <>
@@ -30,10 +30,14 @@ export default function Layout() {
           <div className="collapse navbar-collapse" id="mainNavbar">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">Home</Link>
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
+                <Link className="nav-link" to="/about">
+                  About
+                </Link>
               </li>
             </ul>
             {/* Demo Button in navbar */}
