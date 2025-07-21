@@ -1,19 +1,21 @@
-import React from "react";
-import { Outlet, Link } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer";
+import React from 'react';
+import { Outlet, Link } from 'react-router-dom';
+
+import Header from './Header';
+import Button from './Button';
+import Footer from './Footer';
 
 export default function Layout() {
+  // example click handler for demo
+  const onDemoClick = () => alert('Button clicked!');
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div className="container">
-          {/* Brand */}
           <Link className="navbar-brand" to="/">
             <Header title="My App" />
           </Link>
-
-          {/* Toggler */}
           <button
             className="navbar-toggler"
             type="button"
@@ -25,28 +27,27 @@ export default function Layout() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-
-          {/* Collapsible links */}
           <div className="collapse navbar-collapse" id="mainNavbar">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  Home
-                </Link>
+                <Link className="nav-link" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">
-                  About
-                </Link>
+                <Link className="nav-link" to="/about">About</Link>
               </li>
             </ul>
+            {/* Demo Button in navbar */}
+            <Button label="Demo" variant="secondary" onClick={onDemoClick} />
           </div>
         </div>
       </nav>
+
       <main className="container">
         <Outlet />
       </main>
-      <Footer />
+
+      {/* Props‑driven footer */}
+      <Footer text="My Awesome App" />
     </>
   );
 }
