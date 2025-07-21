@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 /**
  * Props‑driven footer.
@@ -10,7 +10,9 @@ import PropTypes from 'prop-types';
 export default function Footer({ text, year = new Date().getFullYear() }) {
   return (
     <footer className="bg-light text-center py-3 mt-4">
-      <small>{text} © {year}</small>
+      <small>
+        {text} © {year}
+      </small>
     </footer>
   );
 }
