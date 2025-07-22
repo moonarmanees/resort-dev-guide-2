@@ -1,3 +1,6 @@
+console.log('[main.jsx] bootstrapping app');
+
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -8,7 +11,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 // <-- Make sure you import your provider from the right file:
 import CounterProvider from "./context/CounterProvider.jsx"; // 👉 include the “.jsx” extension
 
+
+
 ReactDOM.createRoot(document.getElementById("root")).render(
+
   <BrowserRouter>
     <CounterProvider>
       <App />
