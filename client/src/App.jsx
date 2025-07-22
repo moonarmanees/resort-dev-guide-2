@@ -2,6 +2,9 @@ import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Counter from "./components/Counter";
+import Layout from "./components/Layout";
+
+
 
 export default function App() {
   return (
@@ -14,8 +17,11 @@ export default function App() {
       </nav>
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/" element={<Layout />} >
+          <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
+          
+        </Route>
       </Routes>
 
       <hr />

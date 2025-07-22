@@ -5,6 +5,7 @@ import Header from "./Header";
 import Button from "./Button";
 import Footer from "./Footer";
 
+
 export default function Layout() {
   // example click handler for demo
   const onDemoClick = () => alert("Button clicked!");
