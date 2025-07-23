@@ -10,9 +10,14 @@ export default function Layout() {
   // example click handler for demo
   const onDemoClick = () => alert("Button clicked!");
 
+    // Skip link for keyboard users
+  <a href="#main-content" className="visually-hidden-focusable">
+    Skip to main content
+    </a>
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <nav className="navbar …" role="navigation" aria-label="Main navigation">
         <div className="container">
           <Link className="navbar-brand" to="/">
             <Header title="My App" />
@@ -47,7 +52,7 @@ export default function Layout() {
         </div>
       </nav>
 
-      <main className="container">
+     <main id="main-content" className="container" role="main">
         <Outlet />
       </main>
 
