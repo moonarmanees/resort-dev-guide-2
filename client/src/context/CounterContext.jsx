@@ -1,8 +1,11 @@
-/* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useState } from "react";
+// client/src/context/CounterContext.jsx
 
-export const CounterContext = createContext();
+import React, { createContext, useContext, useState } from 'react';
 
+// 1. Create the context object
+const CounterContext = createContext(null);
+
+// 2. Create the Provider component
 export function CounterProvider({ children }) {
   const [count, setCount] = useState(0);
   const increment = () => setCount((c) => c + 1);
@@ -13,4 +16,13 @@ export function CounterProvider({ children }) {
       {children}
     </CounterContext.Provider>
   );
+}
+
+// 3. Create the custom hook that consumes the context
+export function useCounter() {
+  const context = useContext(CounterContext);
+  if (context === null) {
+    throw new Error('useCounter must be used within a CounterProvider');
+  }
+  return context;
 }

@@ -1,29 +1,43 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
+// client/eslint.config.js
+import globals from "globals";
+import pluginJs from "@eslint/js";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+import jestPlugin from 'eslint-plugin-jest';
 
-export default defineConfig([
-  globalIgnores(['dist']),
+export default [
   {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
-    ],
+    // Ignore the build output directory globally
+    ignores: ["dist/**"], 
+  },
+  // --- Configuration #1: For your main React application files ---
+  {
+    files: ["src/**/*.{js,jsx}"],
+    // Do not apply this configuration to test files
+    ignores: ["src/**/__tests__/**", "src/**/*.test.{js,jsx}"], 
+    ...pluginReactConfig,
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
+      ...pluginReactConfig.languageOptions,
+      globals: {
+        ...globals.browser,
+      },
+    },
+    settings: {
+      react: {
+        version: "detect", // Automatically detect the React version
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      "react/react-in-jsx-scope": "off", // Not needed with modern React/Vite
+      "react/prop-types": "off",       // Turn off if you're not using it consistently
     },
   },
-])
+  // --- Configuration #2: Specifically for your Jest test files ---
+  {
+    files: ["src/**/__tests__/**/*.{js,jsx}", "src/**/*.test.{js,jsx}"],
+    ...jestPlugin.configs['flat/recommended'],
+    rules: {
+      ...jestPlugin.configs['flat/recommended'].rules,
+      "jest/prefer-expect-assertions": "off", // Optional: relax rule requiring expect in every test
+    },
+  },
+];
