@@ -1,23 +1,23 @@
-import React, { Suspense, lazy } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout'
+import React, { Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import AdminLayout from './components/AdminLayout';
+import PrivateRoute from './components/PrivateRoute';
+import './index.css'
 
-// Lazy‑load your page components
-const Home     = lazy(() => import('./pages/Home'))
-const About    = lazy(() => import('./pages/About'))
-const Counter  = lazy(() => import('./components/Counter'))
 
+const Home      = lazy(() => import('./pages/Home'));
+const About     = lazy(() => import('./pages/About'));
+const Counter   = lazy(() => import('./components/Counter'));
+const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
+const Settings  = lazy(() => import('./pages/admin/Settings'));
+const NotFound  = lazy(() => import('./pages/NotFound'));
 
 export default function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <Layout />
-        }
-      >
-        {/* Wrap children in Suspense for loading states */}
+      {/* Public routes */}
+      <Route path="/" element={<Layout />}>
         <Route
           index
           element={
@@ -42,8 +42,42 @@ export default function App() {
             </Suspense>
           }
         />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<div>Loading…</div>}>
+              <NotFound />
+            </Suspense>
+          }
+        />
+      </Route>
 
+      {/* Protected admin routes */}
+      <Route
+        path="/admin"
+        element={
+          <PrivateRoute>
+            <AdminLayout />
+          </PrivateRoute>
+        }
+      >
+        <Route
+          index
+          element={
+            <Suspense fallback={<div>Loading Dashboard…</div>}>
+              <Dashboard />
+            </Suspense>
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            <Suspense fallback={<div>Loading Settings…</div>}>
+              <Settings />
+            </Suspense>
+          }
+        />
       </Route>
     </Routes>
-  )
+  );
 }
