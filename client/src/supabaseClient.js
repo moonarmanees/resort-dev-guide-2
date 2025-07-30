@@ -1,21 +1,13 @@
 // client/src/supabaseClient.js
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://bzwbgulnrwqxtoxjwtfw.supabase.co'
-const supabaseAnonKey = 'SECRET_REMOVED'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-
-// Validate the key format
-if (!supabaseAnonKey.startsWith('eyJ')) {
-  console.error('❌ API key does not start with eyJ - this is not a valid JWT token');
-} else {
-  console.log('✅ API key format looks correct');
+// Check if the environment variables are loaded
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables.');
 }
-
-console.log('🔧 Debug Info:');
-console.log('Supabase URL:', supabaseUrl);
-console.log('Key length:', supabaseAnonKey.length);
-console.log('Key preview:', `${supabaseAnonKey.substring(0, 20)}...${supabaseAnonKey.substring(supabaseAnonKey.length - 10)}`);
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
