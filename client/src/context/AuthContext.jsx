@@ -1,37 +1,96 @@
 // client/src/context/AuthContext.jsx
-
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../supabaseClient';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  // 1. Initialize state by reading from localStorage.
-  //    The function inside useState runs only once on initial render.
-  const [isLoggedIn, setLoggedIn] = useState(() => {
-    return localStorage.getItem('isLoggedIn') === 'true';
-  });
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // 2. Update localStorage when logging in.
-  const login = () => {
-    localStorage.setItem('isLoggedIn', 'true');
-    setLoggedIn(true);
+  useEffect(() => {
+    // Check for an active session when the component mounts
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setLoading(false);
+    });
+
+    // Listen for changes in authentication state (login, logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
+
+    // Clean up the subscription when the component unmounts
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Properly handle signup with error handling
+  const signUp = async (email, password) => {
+    console.log('Attempting signup for:', email);
+    
+    const { data, error } = await supabase.auth.signUp({ 
+      email, 
+      password 
+    });
+    
+    if (error) {
+      console.error('Signup error:', error);
+      throw error;
+    }
+    
+    console.log('Signup successful:', data);
+    return data;
   };
 
-  // 3. Update localStorage when logging out.
-  const logout = () => {
-    localStorage.removeItem('isLoggedIn');
-    setLoggedIn(false);
+  // Properly handle login with error handling
+  const login = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({ 
+      email, 
+      password 
+    });
+    
+    if (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
+    
+    return data;
+  };
+
+  // Properly handle logout
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    
+    if (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
+  };
+
+  // The value provided to consuming components
+  const value = {
+    session,
+    user: session?.user,
+    isLoggedIn: !!session, // True if a session exists, false otherwise
+    signUp,
+    login,
+    logout,
+    loading,
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 }
 
 export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
-  return ctx;
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 }
