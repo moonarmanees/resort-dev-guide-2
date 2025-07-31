@@ -17,7 +17,7 @@ describe('Counter', () => {
   });
 
   it('starts at zero', () => {
-    expect(screen.getByText(/Counter: 0/i)).toBeInTheDocument 
+    expect(screen.getByText(/Counter: 0/i)).toBeInTheDocument ()
    
 
   });
