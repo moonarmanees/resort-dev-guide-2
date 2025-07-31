@@ -6,40 +6,36 @@ import jestPlugin from 'eslint-plugin-jest';
 
 export default [
   {
-    // Ignore the build output directory globally
-    ignores: ["dist/**"], 
+    ignores: ["dist/**"],
   },
   // --- Configuration #1: For your main React application files ---
   {
     files: ["src/**/*.{js,jsx}"],
-    // Do not apply this configuration to test files
     ignores: ["src/**/__tests__/**", "src/**/*.test.{js,jsx}"], 
     ...pluginReactConfig,
     languageOptions: {
       ...pluginReactConfig.languageOptions,
-      globals: {
-        ...globals.browser,
-      },
+      globals: { ...globals.browser },
     },
-    settings: {
-      react: {
-        version: "detect", // Automatically detect the React version
-      },
-    },
+    settings: { react: { version: "detect" } },
     rules: {
-      "react/react-in-jsx-scope": "off", // Not needed with modern React/Vite
-      "react/prop-types": "off",       // Turn off if you're not using it consistently
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
     },
   },
   // --- Configuration #2: Specifically for your Jest test files ---
   {
     files: ["src/**/__tests__/**/*.{js,jsx}", "src/**/*.test.{js,jsx}"],
+    // Apply BOTH the React config (for JSX) and the Jest config
     ...pluginReactConfig,
     ...jestPlugin.configs['flat/recommended'],
     settings: { react: { version: "detect" } },
     rules: {
+      // Keep Jest's recommended rules
       ...jestPlugin.configs['flat/recommended'].rules,
-      "jest/prefer-expect-assertions": "off", // Optional: relax rule requiring expect in every test
+      // And turn off rules not needed in tests
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
     },
   },
 ];
