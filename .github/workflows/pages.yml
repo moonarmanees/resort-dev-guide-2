@@ -4,7 +4,6 @@ permissions:
   pages: write
   id-token: write
 
-
 on:
   push:
     branches: [ main ]
@@ -25,10 +24,15 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies & build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
           cd client
           npm ci
           npm run build
+          # Copy the built files to docs folder for GitHub Pages
+          cp -r dist/* ../docs/
 
       - name: Create 404 fallback
         run: |
