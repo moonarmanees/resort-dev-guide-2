@@ -1,39 +1,76 @@
 // client/eslint.config.js
 import globals from "globals";
 import pluginJs from "@eslint/js";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+import pluginReact from "eslint-plugin-react";
 import jestPlugin from 'eslint-plugin-jest';
 
 export default [
   {
     ignores: ["dist/**"],
   },
+  
+  // Base JavaScript configuration
+  pluginJs.configs.recommended,
+  
   // --- Configuration #1: For your main React application files ---
   {
     files: ["src/**/*.{js,jsx}"],
-    ignores: ["src/**/__tests__/**", "src/**/*.test.{js,jsx}"], 
-    ...pluginReactConfig,
-    languageOptions: {
-      ...pluginReactConfig.languageOptions,
-      globals: { ...globals.browser },
+    ignores: ["src/**/__tests__/**", "src/**/*.test.{js,jsx}"],
+    plugins: {
+      react: pluginReact,
     },
-    settings: { react: { version: "detect" } },
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        ...globals.browser,
+      },
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
     rules: {
+      ...pluginReact.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
     },
   },
+  
   // --- Configuration #2: Specifically for your Jest test files ---
   {
     files: ["src/**/__tests__/**/*.{js,jsx}", "src/**/*.test.{js,jsx}"],
-    // Apply BOTH the React config (for JSX) and the Jest config
-    ...pluginReactConfig,
-    ...jestPlugin.configs['flat/recommended'],
-    settings: { react: { version: "detect" } },
+    plugins: {
+      react: pluginReact,
+      jest: jestPlugin,
+    },
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+      },
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
     rules: {
-      // Keep Jest's recommended rules
-      ...jestPlugin.configs['flat/recommended'].rules,
-      // And turn off rules not needed in tests
+      ...pluginReact.configs.recommended.rules,
+      ...jestPlugin.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
     },
