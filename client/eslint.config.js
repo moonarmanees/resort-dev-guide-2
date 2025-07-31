@@ -34,7 +34,9 @@ export default [
   // --- Configuration #2: Specifically for your Jest test files ---
   {
     files: ["src/**/__tests__/**/*.{js,jsx}", "src/**/*.test.{js,jsx}"],
+    ...pluginReactConfig,
     ...jestPlugin.configs['flat/recommended'],
+    settings: { react: { version: "detect" } },
     rules: {
       ...jestPlugin.configs['flat/recommended'].rules,
       "jest/prefer-expect-assertions": "off", // Optional: relax rule requiring expect in every test
