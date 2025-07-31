@@ -1,8 +1,8 @@
 // client/src/components/Layout.jsx
-import React, { useState } from 'react';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { useAuth } from "../context/AuthContext";
 
 export default function Layout({ siteName, navLinks }) {
   const { isLoggedIn, user, logout, loading } = useAuth();
@@ -12,9 +12,9 @@ export default function Layout({ siteName, navLinks }) {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/'); // Redirect to home after logout
+      navigate("/"); // Redirect to home after logout
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     }
   };
 
@@ -29,21 +29,36 @@ export default function Layout({ siteName, navLinks }) {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button onClick={() => setIsNavOpen(!isNavOpen)} aria-label="Toggle navigation">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            <button
+              onClick={() => setIsNavOpen(!isNavOpen)}
+              aria-label="Toggle navigation"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
               </svg>
             </button>
           </div>
 
           {/* Desktop Menu & Auth Buttons */}
-          <div className={`w-full md:flex md:items-center md:w-auto ${isNavOpen ? 'block' : 'hidden'}`}>
+          <div
+            className={`w-full md:flex md:items-center md:w-auto ${isNavOpen ? "block" : "hidden"}`}
+          >
             <ul className="flex flex-col md:flex-row md:ml-auto items-center mt-4 md:mt-0 space-y-4 md:space-y-0 md:space-x-6">
               {/* Regular Navigation Links */}
               {navLinks.map((link) => (
                 <li key={link.to}>
-                  <Link 
-                    to={link.to} 
+                  <Link
+                    to={link.to}
                     className="text-gray-600 hover:text-gray-800 transition-colors"
                     onClick={() => setIsNavOpen(false)} // Close mobile menu on click
                   >
@@ -51,7 +66,7 @@ export default function Layout({ siteName, navLinks }) {
                   </Link>
                 </li>
               ))}
-              
+
               {/* Authentication Section */}
               <li>
                 {loading ? (
@@ -61,8 +76,8 @@ export default function Layout({ siteName, navLinks }) {
                     <span className="text-gray-700 hidden sm:inline">
                       Welcome, {user?.email}
                     </span>
-                    <button 
-                      onClick={handleLogout} 
+                    <button
+                      onClick={handleLogout}
                       className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
                     >
                       Logout
@@ -70,15 +85,15 @@ export default function Layout({ siteName, navLinks }) {
                   </div>
                 ) : (
                   <div className="flex space-x-2">
-                    <Link 
-                      to="/login" 
+                    <Link
+                      to="/login"
                       className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
                       onClick={() => setIsNavOpen(false)}
                     >
                       Login
                     </Link>
-                    <Link 
-                      to="/signup" 
+                    <Link
+                      to="/signup"
                       className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
                       onClick={() => setIsNavOpen(false)}
                     >
@@ -108,18 +123,20 @@ export default function Layout({ siteName, navLinks }) {
 // Define default props and types for validation
 Layout.propTypes = {
   siteName: PropTypes.string,
-  navLinks: PropTypes.arrayOf(PropTypes.shape({
-    to: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-  })),
+  navLinks: PropTypes.arrayOf(
+    PropTypes.shape({
+      to: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+    }),
+  ),
 };
 
 Layout.defaultProps = {
-  siteName: 'My Website',
+  siteName: "My Website",
   navLinks: [
-    { to: '/', text: 'Home' },
-    { to: '/about', text: 'About' },
-    { to: '/services', text: 'Services' },
-    { to: '/contact', text: 'Contact' },
+    { to: "/", text: "Home" },
+    { to: "/about", text: "About" },
+    { to: "/services", text: "Services" },
+    { to: "/contact", text: "Contact" },
   ],
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { useCounter } from '../context/CounterContext';
+import { useCounter } from "../context/CounterContext";
 import Button from "./Button";
 
 export default function Counter() {

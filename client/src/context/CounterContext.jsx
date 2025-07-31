@@ -1,6 +1,6 @@
 // client/src/context/CounterContext.jsx
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 // 1. Create the context object
 const CounterContext = createContext(null);
@@ -22,7 +22,7 @@ export function CounterProvider({ children }) {
 export function useCounter() {
   const context = useContext(CounterContext);
   if (context === null) {
-    throw new Error('useCounter must be used within a CounterProvider');
+    throw new Error("useCounter must be used within a CounterProvider");
   }
   return context;
 }
